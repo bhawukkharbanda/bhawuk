@@ -36,8 +36,14 @@ export function Navbar() {
         aria-label="Main navigation"
         className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8"
       >
-        <a href="#top" className="font-heading text-lg font-extrabold text-navy">
-          Bhawuk<span className="text-primary">.</span>
+        <a
+          href="#top"
+          className={cn(
+            'font-heading text-lg font-extrabold transition-colors',
+            scrolled || open ? 'text-navy' : 'text-white',
+          )}
+        >
+          Bhawuk<span className={scrolled || open ? 'text-primary' : 'text-sky-200'}>.</span>
         </a>
 
         <ul className="hidden items-center gap-8 md:flex">
@@ -45,7 +51,12 @@ export function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                className={cn(
+                  'text-sm font-medium transition-colors',
+                  scrolled
+                    ? 'text-muted-foreground hover:text-primary'
+                    : 'text-blue-50/90 hover:text-white',
+                )}
               >
                 {link.label}
               </a>
@@ -53,11 +64,23 @@ export function Navbar() {
           ))}
         </ul>
 
-        <a href="#contact" className={cn(buttonVariants(), 'hidden rounded-full px-5 md:inline-flex')}>Hire Me</a>
+        <a
+          href="#contact"
+          className={cn(
+            buttonVariants(),
+            'hidden rounded-full px-5 md:inline-flex',
+            !scrolled && 'bg-white text-primary hover:bg-blue-50',
+          )}
+        >
+          Hire Me
+        </a>
 
         <button
           type="button"
-          className="inline-flex size-10 items-center justify-center rounded-lg text-navy hover:bg-accent md:hidden"
+          className={cn(
+            'inline-flex size-10 items-center justify-center rounded-lg md:hidden',
+            scrolled || open ? 'text-navy hover:bg-accent' : 'text-white hover:bg-white/15',
+          )}
           aria-expanded={open}
           aria-controls="mobile-menu"
           onClick={() => setOpen((v) => !v)}
